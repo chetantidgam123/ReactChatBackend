@@ -1,7 +1,9 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const chats = require("./data/data")
+const connectDb = require("./config/db")
 dotenv.config()
+connectDb()
 const app = express()
 
 app.get('/', (req, res) => {
