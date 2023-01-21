@@ -52,5 +52,17 @@ const authUser = async (req, res) => {
         throw new Error("Invalid Email or Password")
     }
 }
+// /api/user 
+const allUser = async (req, res) => {
+    const keyWord = req.query.search ? {
+        $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+        ]
+    } : {};
 
-module.exports = { registerUser, authUser }
+    const user = await User.find(keyWord).find({ _id: { $ne: req.user._id } });
+    res.send(user)
+}
+
+module.exports = { registerUser, authUser, allUser }
