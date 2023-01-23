@@ -30,7 +30,10 @@ const registerUser = async (req, res) => {
         })
     } else {
         res.status(401);
-        throw new Error("Failed to Create User")
+        res.send({
+            code:401,
+            message:"Failed to Create User"
+        })
     }
 
 }
@@ -41,6 +44,7 @@ const authUser = async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
         res.status(201).json({
+            code:200,
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -48,12 +52,16 @@ const authUser = async (req, res) => {
             token: generateToken(user._id)
         })
     } else {
-        res.status(401);
-        throw new Error("Invalid Email or Password")
+        // res.status(401);
+        res.send({
+            code:401,
+            message:"Invalid Email or Password"
+        })
     }
 }
 // /api/user 
 const allUser = async (req, res) => {
+    console.log(req);
     const keyWord = req.query.search ? {
         $or: [
             { name: { $regex: req.query.search, $options: "i" } },
