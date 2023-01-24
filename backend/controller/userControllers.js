@@ -31,8 +31,8 @@ const registerUser = async (req, res) => {
     } else {
         res.status(401);
         res.send({
-            code:401,
-            message:"Failed to Create User"
+            code: 401,
+            message: "Failed to Create User"
         })
     }
 
@@ -44,7 +44,7 @@ const authUser = async (req, res) => {
 
     if (user && (await user.matchPassword(password))) {
         res.status(201).json({
-            code:200,
+            code: 200,
             _id: user._id,
             name: user.name,
             email: user.email,
@@ -54,14 +54,13 @@ const authUser = async (req, res) => {
     } else {
         // res.status(401);
         res.send({
-            code:401,
-            message:"Invalid Email or Password"
+            code: 401,
+            message: "Invalid Email or Password"
         })
     }
 }
 // /api/user 
 const allUser = async (req, res) => {
-    console.log(req);
     const keyWord = req.query.search ? {
         $or: [
             { name: { $regex: req.query.search, $options: "i" } },
@@ -70,7 +69,22 @@ const allUser = async (req, res) => {
     } : {};
 
     const user = await User.find(keyWord).find({ _id: { $ne: req.user._id } });
-    res.send(user)
+    if (user.length > 0) {
+        res.send(
+            {
+                user: user,
+                code: 200
+            }
+        )
+    } else {
+        res.send(
+            {
+                user: user,
+                code: 400,
+                message: "No Chat Available"
+            }
+        )
+    }
 }
 
 module.exports = { registerUser, authUser, allUser }

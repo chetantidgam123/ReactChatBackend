@@ -12,14 +12,12 @@ const protect = async (req, res, next) => {
             req.user = await User.findById(decode.id).select("-password");
             next();
         } catch (error) {
-            res.status(401);
-            throw new Error("Not Authorized ,token failed")
+            res.status(401).send("Not Authorized ,token failed");
 
         }
     }
-    if(!token){
-        res.status(401);
-        throw new Error("Not Authorized,no token")
+    if (!token) {
+        res.status(401).send("Not Authorized,no token");
     }
 }
-module.exports = {protect}
+module.exports = { protect }
