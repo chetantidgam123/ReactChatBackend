@@ -52,7 +52,6 @@ const authUser = async (req, res) => {
             token: generateToken(user._id)
         })
     } else {
-        // res.status(401);
         res.send({
             code: 401,
             message: "Invalid Email or Password"
@@ -79,7 +78,7 @@ const allUser = async (req, res) => {
     } else {
         res.send(
             {
-                user: user,
+                user: [],
                 code: 400,
                 message: "No Chat Available"
             }

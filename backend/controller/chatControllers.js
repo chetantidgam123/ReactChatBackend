@@ -4,8 +4,7 @@ const accesschat = async (req,res)=>{
     const {userId} = req.body;
     
     if(!userId){
-        console.log("UserId param not sent with request");
-        return res.sendStatus(400)
+        return res.sendStatus(400).send("UserId param not sent with request")
     }
 
     var isChat = await Chat.find({
@@ -55,8 +54,7 @@ const fetchChats = async(req,res)=>{
             res.status(200).send(result);
         })
     } catch (error) {
-        res.status(400);
-        throw new Error(error.message);
+        res.status(400).send(error.message);
     }
 }
 
