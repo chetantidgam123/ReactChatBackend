@@ -77,6 +77,8 @@ const createGroupChat = async(req,res)=>{
             users:users,
             isGroupChat:true,
             groupAdmin:req.user,
+        },{
+            new:true
         })
         const fullGroupChat = await Chat.findOne({_id:groupChat._id})
         .populate("users","-password")
