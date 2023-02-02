@@ -2,9 +2,9 @@
   "name": "chatappbackend",
   "version": "1.0.0",
   "description": "",
-  "main": "backend/server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon backend/server.js"
+    "start": "nodemon backend/server.js"
   },
   "keywords": [],
   "author": "",
