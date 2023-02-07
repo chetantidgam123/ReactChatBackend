@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require('cors')
 const dotenv = require("dotenv")
 const chats = require("./data/data")
 const path = require('path')
@@ -11,6 +12,7 @@ const chatRoutes = require('./routes/chatRoutes')
 const messageRoutes = require('./routes/messageRoutes')
 const { notFound, errorHandler } = require("./middleware/errorMiddlewre")
 const { patch } = require("./routes/messageRoutes")
+app.use(cors({ origin: true }))
 connectDb()
 app.use(express.json())
 
@@ -39,7 +41,7 @@ const server = app.listen(PORT, () => {
 const io = require("socket.io")(server, {
     pingTimeout: 60000,
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://cool-piroshki-3f4349.netlify.app",
     }
 })
 io.on("connection", (socket) => {
